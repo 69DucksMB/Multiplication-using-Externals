@@ -1,0 +1,92 @@
+# ======================
+# Mult test test.py
+# 06/02/2021
+# Mark Balagtas
+# Multiply easy random numbers, the more you do, the higher the score.
+# Stores the Highscore and the username in a txt file
+# Allows user to save their highscore and see highscores of previous runs
+# ======================
+
+# Storing the Highscore and usernames in a text file, allows the possibility to save multiple highscores and usernames permanently even after closing the program.
+# You can recall all highscores
+
+# =========== imports ===============
+
+import random as r
+
+# ============== ints ==========
+
+uans = 0
+start = True
+
+
+# =========== funcs ============
+
+def multiply():
+    x = True
+    score = 0
+    while x:
+        n1 = r.randint(0,10)
+        n2 = r.randint(0,10)
+        ans = str(n1*n2)
+        print("\nWhat is", n1, 'x', n2, "? ")
+        uinp = input('> ')
+        if uinp == ans:
+            print("\nThe answer is", ans)
+            print("Correct!")
+            score += 100
+            
+
+        else:
+            print("\nThe answer is", ans)
+            print("Incorrect!")
+            print("\nYour score is:", score)
+            
+            saveit = input("\nWould you like to save your score? ")
+            if 'y' in saveit.lower():
+                name = input('What is your name? ')
+                with open ('highscores2.txt', 'a') as f: #writes scores in txtfile plus name
+                    f.write('\n'+str(score))
+                    f.write(' '+name)
+                    
+                print('Score Saved')
+                
+            else:
+                print('Score Not Saved')
+                    
+            x = False
+
+def highscores():
+    with open ('highscores.txt', 'r') as f: 
+        allscores = f.readlines()
+        n = 0
+        if len(allscores) == 0:
+            print("You have no saved scores.")
+        else:
+            print('\nHighscores')
+            for i in range(len(allscores)):
+                scores = (allscores[n])
+                print(scores)
+                n+=1
+                    
+def main():
+    play = True
+    while play:
+        print('\nMultiply!')
+        
+        multiply()
+        highscores()
+        
+        again = input('\nWould you like to play again?')
+        if 'n' in again.lower():
+            print("Good bye")
+            play = False
+        
+    
+    
+# ========== main ========
+
+main()
+
+
+
