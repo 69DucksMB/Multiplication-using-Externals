@@ -1,0 +1,73 @@
+# =============================
+# start.py
+# Mark Balagtas
+# 6/4/2021
+# Using external libraries - formative
+# ================================
+
+# create a multiplication game. Users choose what the range of #s to multiply.
+# One library could be the multiplying function and variables, other could be keeping track of the highscores, storing and showing.
+
+# ==================== imports ============
+
+from modules1 import multiplication as m
+from modules1 import saveit as s
+import random as r
+import time as t
+
+# ============= funcs ===============
+
+def main():
+    start = True
+    while start:
+        print('\nMultiply!')
+        print('\nWhat is the SMALLEST number you want to multiply with?')
+        fn = input('> ')
+        print('\nWhat is the LARGEST number you want to multiply with?')
+        sn = input('> ')
+        x = True
+        score = 0
+        
+        fn = int(fn)
+        sn = int(sn)
+        
+        while x:
+            n1 = r.randint(fn,sn)
+            n2 = r.randint(fn,sn)
+            ans = m.multiply(n1,n2) # multiply from dunc from own module lol
+            uinp = m.ask(n1,n2) # asks from module
+            if uinp == ans:
+                print("\nThe answer is", ans)
+                print("Correct!")
+                score = m.score(score,fn,sn) # score is higher for those that multiply a greater range of numbs
+                continue
+            
+            else:
+                print("\nThe answer is", ans)
+                print("Incorrect!")
+                print("\nYour score is:", score)
+                
+                save = input("\nWould you like to save your score? ")
+                if 'y' in save.lower():
+                    s.savescore(score)
+                    start = False
+                    x = False
+            
+                else:
+                    print('Score Not Saved')
+                    start =  False
+                    x = False
+            
+            again = input('\nWould you like to play again? y/n? ')
+            if 'y' in again.lower():
+                start = True
+            
+            else:
+                print('Good Bye!')
+                print('\nSaved Scores: ')
+                s.showscores()
+                start = False
+                print('\nEnd')
+
+# ============ main ============
+main()
